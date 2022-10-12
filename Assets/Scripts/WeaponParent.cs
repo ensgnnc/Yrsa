@@ -48,13 +48,14 @@ public class WeaponParent : MonoBehaviour
 
         transform.localScale = scale;
 
-
+        /*
         if(transform.eulerAngles.z > 0 && transform.eulerAngles.z < 180)
         {
             weaponRenderer.sortingOrder = playerRenderer.sortingOrder - 1;
         } else {
             weaponRenderer.sortingOrder = playerRenderer.sortingOrder + 1;
         }
+        */
     }
 
     public void Attack()
