@@ -20,21 +20,21 @@ public class PlayerAnimator : MonoBehaviour
         {
             if (playerController.movementInput.x > 0)
             {
-                scale.x = 1;
+                scale.x = 1.2f;
             }
             else if (playerController.movementInput.x < 0)
             {
-                scale.x = -1;
+                scale.x = -1.2f;
             }
         } else
         {
             if (lookDirection.x > 0)
             {
-                scale.x = 1;
+                scale.x = 1.2f;
             }
             else if (lookDirection.x < 0)
             {
-                scale.x = -1;
+                scale.x = -1.2f;
             }
         }
         transform.localScale = scale;
