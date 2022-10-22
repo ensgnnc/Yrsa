@@ -1,4 +1,0 @@
-repository "Sky Adventure@OSBH@cloud"
-  path "/"
-    smartbranch "/main" 
-     
