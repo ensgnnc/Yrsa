@@ -7,32 +7,63 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 1f;
-    public float collisionOffset = 0.05f;
+    // Movement
+    public float moveSpeed = 5f;
+    public float collisionOffset = 0.01f;
     public ContactFilter2D movementFilter;
-
     public GameObject body;
-
     bool canMove = true;
-
     public bool success;
-
     public Vector2 movementInput;
 
-    Rigidbody2D rb;
-    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    // Interact
+    public GameObject interactIcon;
 
+    // Variables
+    private List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    private Vector2 boxSize = new Vector2(0.1f, 1f);
+
+    // Components
     public SpriteRenderer spriteRenderer;
     public Animator animator;
-
-    private WeaponParent weaponParent;
     private PlayerInputActions playerInputActions;
+    private PlayerAnimator playerAnimator;
+    private Rigidbody2D rb;
+
+    // Game Objects
+    private WeaponParent weaponParent;
     private Camera mainCamera;
 
-    private PlayerAnimator playerAnimator;
+    public void enableInteractIcon()
+    {
+        interactIcon.SetActive(true);
+    }
+
+    public void disableInteractIcon()
+    {
+        interactIcon.SetActive(false);
+    }
+
+    private void checkInteraction()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
+
+        if(hits.Length > 0)
+        {
+            foreach(RaycastHit2D rc in hits)
+            {
+                if (rc.transform.GetComponent<Interactable>())
+                {
+                    rc.transform.GetComponent<Interactable>().Interact();
+                    return;
+                }
+            }
+        }
+    }
 
     void Start()
     {
+        interactIcon.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
     }
@@ -115,6 +146,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnFire() {
         weaponParent.Attack();
+    }
+
+    private void OnInteract()
+    {
+        checkInteraction();
     }
 
     public void LockMovement() {
