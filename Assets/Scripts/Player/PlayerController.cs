@@ -7,6 +7,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public int level = 10;
+    public int health = 100;
+    public float power = 1.0f;
+
     // Movement
     public float moveSpeed = 5f;
     public float collisionOffset = 0.01f;
