@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
         level = player.GetComponent<PlayerController>().level;
         levelText.text = "Level: " + level.ToString();
 
-        health = player.GetComponent<PlayerController>().health;
+        health = player.GetComponent<Health>().currentHealth;
         healthText.text = "Health: " + health.ToString();
     }
 }

@@ -6,10 +6,15 @@ using UnityEngine.InputSystem.Composites;
 
 public class AnimationHelper : MonoBehaviour
 {
-    public UnityEvent OnAnimationEventTriggered;
+    public UnityEvent OnAnimationEventTriggered, OnAttackPerformed;
 
     public void TriggerEvent()
     {
         OnAnimationEventTriggered?.Invoke();
+    }
+
+    public void TriggerAttack()
+    {
+        OnAttackPerformed?.Invoke();
     }
 }

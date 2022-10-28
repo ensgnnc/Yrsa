@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 370523239}
   - component: {fileID: 118447817}
   - component: {fileID: 118447818}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0.2, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6371771117810012480}
   m_Father: {fileID: 434246676}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,6 +134,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnAttackPerformed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 562946997}
+        m_TargetAssemblyTypeName: WeaponParent, Assembly-CSharp
+        m_MethodName: DetectColliders
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &434246675
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 434246676}
   - component: {fileID: 562946997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WeaponParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,6 +198,8 @@ MonoBehaviour:
   weaponRenderer: {fileID: 0}
   mouseWorldPosition: {x: 0, y: 0}
   delay: 0.3
+  circleOrigin: {fileID: 6371771117810012480}
+  radius: 0.45
 --- !u!1 &1001526404
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +212,7 @@ GameObject:
   - component: {fileID: 1001526406}
   - component: {fileID: 1001526407}
   - component: {fileID: 1931729664}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,13 +329,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1399454130}
   - component: {fileID: 1399454129}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ebutton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1399454130
 Transform:
   m_ObjectHideFlags: 0
@@ -397,9 +415,10 @@ GameObject:
   - component: {fileID: 417431878}
   - component: {fileID: 417431879}
   - component: {fileID: 417431882}
+  - component: {fileID: 557793178}
   - component: {fileID: 1083862036006224559}
   - component: {fileID: 1490424592}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Robin
   m_TagString: Player
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -422,7 +441,7 @@ Transform:
   - {fileID: 434246676}
   - {fileID: 1399454130}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &417431878
 Rigidbody2D:
@@ -488,6 +507,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2c5d06bd1c76c47a6190889e7646ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 10
+  health: 100
+  power: 1
   moveSpeed: 5
   collisionOffset: 0.01
   movementFilter:
@@ -510,6 +532,26 @@ MonoBehaviour:
   interactIcon: {fileID: 1399454128}
   spriteRenderer: {fileID: 1001526406}
   animator: {fileID: 1001526407}
+--- !u!114 &557793178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981008564878397192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46c8274c76b6fa4c91bb4c8090f360e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  OnHitWithReference:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathWithReference:
+    m_PersistentCalls:
+      m_Calls: []
+  isDead: 0
 --- !u!61 &1083862036006224559
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -548,3 +590,34 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!1 &7078594628741853556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6371771117810012480}
+  m_Layer: 6
+  m_Name: Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6371771117810012480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078594628741853556}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.011666851, y: 0.15583329, z: 0}
+  m_LocalScale: {x: 0.8333333, y: 0.8333333, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 370523238}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
