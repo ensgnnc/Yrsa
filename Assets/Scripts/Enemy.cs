@@ -9,12 +9,17 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 3f;
 
+    public int levelWorth = 1;
+
     Rigidbody2D rb;
     Transform target;
     Vector2 moveDirection;
     SpriteRenderer sr;
     Animator animator;
     bool dead = false;
+
+    public GameObject player;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,12 +32,16 @@ public class Enemy : MonoBehaviour
         return GameObject.Find("Player").transform;
     }
 
+    public void giveDrops() {
+        player.GetComponent<PlayerController>().level += levelWorth;
+        Destroy(transform.gameObject);
+    }
+
     public void destroy()
     {
         dead = true;
+        target = null;
         moveSpeed = 0;
-        moveDirection = Vector3.zero;
-        Destroy(transform.gameObject);
     }
 
     private void Start()
@@ -48,11 +57,17 @@ public class Enemy : MonoBehaviour
 
             moveDirection = direction;
         }
+        else
+        {
+            Vector3 direction = (transform.position).normalized;
+
+            moveDirection = direction;
+        }
     }
 
     private void FixedUpdate()
     {
-        if (target && !dead)
+        if (target)
         {
             Vector2 scale = transform.localScale;
             if (moveDirection.x > 0) {

@@ -1,41 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     [SerializeField]
-    public int currentHealth;
-    private int maxHealth;
+    public float currentHealth;
+    public float maxHealth;
 
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
-    [SerializeField]
-    private bool isDead = false;
-
-    Animator animator;
+    public HealthBarController HealthBarController;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        HealthBarController.SetHealtBar(currentHealth, maxHealth);
     }
 
-    public void InitializeHealth(int healthValue)
+    public void GetHit(float amount, GameObject sender)
     {
-        currentHealth = healthValue;
-        maxHealth = healthValue;
-        isDead = false;
-    }
-
-    public void GetHit(int amount, GameObject sender)
-    {
-        if (isDead)
-            return;
         if (sender.layer == gameObject.layer)
             return;
 
         currentHealth -= amount;
+        
+        HealthBarController.SetHealtBar(currentHealth, maxHealth);
 
         if (currentHealth > 0)
         {
@@ -44,8 +35,6 @@ public class Health : MonoBehaviour
         else
         {
             OnDeathWithReference?.Invoke(sender);
-            isDead = true;
-            animator.SetTrigger("Dead");
         }
     }
 }

@@ -187,7 +187,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 255
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a9f84881abde25b48904c0ff67bca145, type: 2}
@@ -272,7 +272,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 255
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a9f84881abde25b48904c0ff67bca145, type: 2}
@@ -419,7 +419,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 255
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a9f84881abde25b48904c0ff67bca145, type: 2}

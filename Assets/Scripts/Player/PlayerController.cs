@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public int level = 10;
-    public int health = 100;
+    public float currentHealth = 100;
+    public float maxHealth = 100;
     public float power = 1.0f;
-
+    public float critDamage = 10f;
+    public float critChange = 7f;
     // Movement
     public float moveSpeed = 5f;
     public float collisionOffset = 0.01f;
@@ -38,32 +41,7 @@ public class PlayerController : MonoBehaviour
     private WeaponParent weaponParent;
     private Camera mainCamera;
 
-    public void enableInteractIcon()
-    {
-        interactIcon.SetActive(true);
-    }
-
-    public void disableInteractIcon()
-    {
-        interactIcon.SetActive(false);
-    }
-
-    private void checkInteraction()
-    {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
-
-        if(hits.Length > 0)
-        {
-            foreach(RaycastHit2D rc in hits)
-            {
-                if (rc.transform.GetComponent<Interactable>())
-                {
-                    rc.transform.GetComponent<Interactable>().Interact();
-                    return;
-                }
-            }
-        }
-    }
+    public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
     void Start()
     {
@@ -119,6 +97,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void enableInteractIcon()
+    {
+        interactIcon.SetActive(true);
+    }
+
+    public void disableInteractIcon()
+    {
+        interactIcon.SetActive(false);
+    }
+
+    private void checkInteraction()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
+
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit2D rc in hits)
+            {
+                if (rc.transform.GetComponent<Interactable>())
+                {
+                    rc.transform.GetComponent<Interactable>().Interact();
+                    return;
+                }
+            }
+        }
+    }
+
+    public void GetHit(float amount, GameObject sender)
+    {
+        if (sender.layer == gameObject.layer)
+            return;
+
+        currentHealth -= amount;
+
+        if (currentHealth > 0)
+        {
+            OnHitWithReference?.Invoke(sender);
+        }
+        else
+        {
+            OnDeathWithReference?.Invoke(sender);
+        }
+    }
     private bool TryMove(Vector2 direction)
     {
         if (direction != Vector2.zero) {
@@ -164,5 +185,4 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement() {
         canMove = true;
     }
-
 }

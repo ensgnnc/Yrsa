@@ -19,6 +19,8 @@ public class WeaponParent : MonoBehaviour
     public Transform circleOrigin;
     public float radius;
 
+    public float random;
+
     public void ResetIsAttacking()
     {
         IsAttacking = false;
@@ -75,15 +77,22 @@ public class WeaponParent : MonoBehaviour
         Gizmos.DrawWireSphere(position, radius);
     }
 
-    public int calculateDamage()
+    public float calculateDamage()
     {
         float power = transform.parent.GetComponent<PlayerController>().power;
-        float critChange = 0.2f;
+        float critDamage = transform.parent.GetComponent<PlayerController>().critDamage;
+        float critChange = transform.parent.GetComponent<PlayerController>().critChange;
 
-        //TODO: Create damage calculator with crit change and crit damage
-        float damage = power;
+        random = UnityEngine.Random.Range(1.0f, 100.0f);
 
-        return ((int)damage);
+        if(random <= critChange)
+        {
+            return power * critDamage;
+        }
+        else
+        {
+            return power;
+        }
     }
 
     public void DetectColliders()
