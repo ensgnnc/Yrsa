@@ -1,2 +1,2 @@
-# Sky-Adventure
-Sky Adventure is a game project which is developing for OSBH.
+# TeknoOdemis
+I am developing this game for Tekno Odemis game developing booth by me.
