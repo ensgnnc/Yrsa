@@ -102,7 +102,7 @@ public class WeaponParent : MonoBehaviour
             Health health;
             if(health = collider.GetComponent<Health>())
             {
-                health.GetHit(calculateDamage(), transform.parent.gameObject);
+                health.GetHit(calculateDamage(), transform.gameObject);
             }
         }
     }

@@ -8,17 +8,23 @@ public class Knockback : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
+    public GameObject player;
 
     [SerializeField]
     private float power = 7, delay = 0.15f;
 
     public UnityEvent OnStart, OnEnd;
 
-    public void DoKnockback(GameObject sender)
+    public Transform findPlayer()
+    {
+        return GameObject.Find("Player").transform;
+    }
+
+    public void DoKnockback()
     {
         StopAllCoroutines();
         OnStart?.Invoke();
-        Vector2 direction = (transform.position - sender.transform.position).normalized;
+        Vector2 direction = (transform.position - findPlayer().position).normalized;
         rb.AddForce(direction * power, ForceMode2D.Impulse);
         StartCoroutine(Reset());
     }
