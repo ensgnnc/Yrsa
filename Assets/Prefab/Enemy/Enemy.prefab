@@ -838,6 +838,9 @@ MonoBehaviour:
           m_StringArgument: Dead
           m_BoolArgument: 0
         m_CallState: 2
+  WaveManagerOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   HealthBarController: {fileID: 337294758}
 --- !u!114 &3995095123814389467
 MonoBehaviour:

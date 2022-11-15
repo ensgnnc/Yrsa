@@ -12,10 +12,13 @@ public class Health : MonoBehaviour
 
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
+    public WaveManager waveManager;
+
     public HealthBarController HealthBarController;
 
     private void Start()
     {
+        waveManager = GetComponent<WaveManager>();
         HealthBarController.SetHealtBar(currentHealth, maxHealth);
     }
 
@@ -34,6 +37,7 @@ public class Health : MonoBehaviour
         }
         else
         {
+            waveManager.onEnemyDie();
             OnDeathWithReference?.Invoke(sender);
         }
     }

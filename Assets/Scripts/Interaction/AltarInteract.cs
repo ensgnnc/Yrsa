@@ -10,6 +10,11 @@ public class AltarInteract : Interactable
     public GameObject statsUI;
     public GameObject player;
 
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
+
     public override void Interact()
     {
         if (isEnable)

@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    int waveEnemyCount;
+    int activeEnemyCount;
+
+    public IdoenInteract idoenInteract;
+
     // Enemy list
     public List<GameObject> enemies;
 
@@ -19,11 +24,6 @@ public class WaveManager : MonoBehaviour
      * 4) Instantiniate them with effect.
      * 5) Check for wave end. Maybe when enemy died for optimisation.
      */
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) spawnEnemy();
-    }
 
     public Vector3 GetRandomLocation()
     {
@@ -42,8 +42,31 @@ public class WaveManager : MonoBehaviour
         return enemies[randomEnemyInt];
     }
 
-    public void spawnEnemy() {
-        var enemy = GetRandomEnemy();
-        Instantiate(enemy, GetRandomLocation(), enemy.transform.rotation);
+    public void spawnEnemy(int amount) {
+        idoenInteract.isWaveRunning = true;
+        int i = 1;
+        activeEnemyCount = amount;
+        waveEnemyCount = amount;
+        while (i <= amount)
+        {
+            var enemy = GetRandomEnemy();
+            Instantiate(enemy, GetRandomLocation(), enemy.transform.rotation);
+            i++;
+        }
+        
+    }
+
+    public void onEnemyDie()
+    {
+        --activeEnemyCount;
+        if (activeEnemyCount == 0)
+        {
+            idoenInteract.isWaveRunning = false;
+        }
+    }
+
+    public void startWave(int level)
+    {
+        spawnEnemy(level + 3);
     }
 }
