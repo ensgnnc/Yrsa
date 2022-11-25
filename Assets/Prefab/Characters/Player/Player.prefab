@@ -180,7 +180,7 @@ MonoBehaviour:
   - {x: 0.06587607, y: -0.15799202, z: 0}
   m_ShapePathHash: 1899021843
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1674
+  m_InstanceId: -21744
 --- !u!1 &434246675
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +384,7 @@ MonoBehaviour:
   - {x: 0.1600514, y: -0.08886779, z: 0}
   m_ShapePathHash: -1015645854
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1656
+  m_InstanceId: -21726
 --- !u!1 &1399454128
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 1083862036006224559}
   - component: {fileID: 3698024985987508179}
   m_Layer: 6
-  m_Name: Robin
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -586,6 +586,7 @@ MonoBehaviour:
   OnDeathWithReference:
     m_PersistentCalls:
       m_Calls: []
+  enemy: {fileID: 3995095123814389470, guid: dc1124e08f54b8f4cacb7594029738c9, type: 3}
 --- !u!210 &1490424592
 SortingGroup:
   m_ObjectHideFlags: 0

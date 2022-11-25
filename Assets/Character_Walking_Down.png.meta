@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 196b0723cd3453840934bae80f5ef980
+guid: 647c54d96558fe24ea93cec15aa50483
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,21 +34,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 2
-    wrapV: 2
-    wrapW: 2
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +71,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,106 +118,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: machete_ [iron]_0
+      name: Character_Walking_Down_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 38
-        width: 5
-        height: 20
-      alignment: 9
-      pivot: {x: 0.4, y: 0.15}
+        x: 132
+        y: 18
+        width: 120
+        height: 360
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f67f4551b4f45584998b07669dff4b1c
-      internalID: 492351172
+      spriteID: 87a50d975826ea3438309ac0b609e561
+      internalID: 518903257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machete_ [iron]_1
+      name: Character_Walking_Down_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 6
-        width: 19
-        height: 20
-      alignment: 9
-      pivot: {x: 0.84210527, y: 0.15}
+        x: 516
+        y: 18
+        width: 120
+        height: 366
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41e739f4f17d1f244a1c994b1331cb4a
-      internalID: 1349663630
+      spriteID: 5fdbf97f27f310b4587c2fb38e1f6235
+      internalID: 2138072530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machete_ [iron]_2
+      name: Character_Walking_Down_2
       rect:
         serializedVersion: 2
-        x: 35
-        y: 6
-        width: 16
-        height: 20
-      alignment: 9
-      pivot: {x: 0.8125, y: 0.15}
+        x: 906
+        y: 18
+        width: 120
+        height: 366
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ab3c8a213051f54cae73062d5b5bf77
-      internalID: 672299880
+      spriteID: a83c8ea619552a640a40e0fb7c27ae3b
+      internalID: 1724390188
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machete_ [iron]_3
+      name: Character_Walking_Down_3
       rect:
         serializedVersion: 2
-        x: 71
-        y: 6
-        width: 12
-        height: 20
-      alignment: 9
-      pivot: {x: 0.75, y: 0.15}
+        x: 1290
+        y: 18
+        width: 120
+        height: 366
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ff9116a556813045a214039861ff78c
-      internalID: 948864495
+      spriteID: 640aa082a4ddd3c49aba9ea9c0ea1f47
+      internalID: -1029577419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machete_ [iron]_4
+      name: Character_Walking_Down_4
       rect:
         serializedVersion: 2
-        x: 104
-        y: 6
-        width: 11
-        height: 20
-      alignment: 9
-      pivot: {x: 0.72727275, y: 0.15}
+        x: 1674
+        y: 18
+        width: 120
+        height: 366
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddae0f99fb5e05c4b8e86511e36c3543
-      internalID: 811125695
+      spriteID: cda73726b50fe9a4db0b4350669aec64
+      internalID: -1727298600
       vertices: []
       indices: 
       edges: []
@@ -233,11 +233,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      machete_ [iron]_1: 1349663630
-      machete_ [iron]_0: 492351172
-      machete_ [iron]_4: 811125695
-      machete_ [iron]_2: 672299880
-      machete_ [iron]_3: 948864495
+      Character_Walking_Down_4: -1727298600
+      Character_Walking_Down_0: 518903257
+      Character_Walking_Down_3: -1029577419
+      Character_Walking_Down_1: 2138072530
+      Character_Walking_Down_2: 1724390188
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

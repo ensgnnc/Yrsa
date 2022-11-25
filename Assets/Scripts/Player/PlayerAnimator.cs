@@ -26,7 +26,8 @@ public class PlayerAnimator : MonoBehaviour
             {
                 scale.x = -1.2f;
             }
-        } else
+        }
+        else
         {
             if (lookDirection.x > 0)
             {

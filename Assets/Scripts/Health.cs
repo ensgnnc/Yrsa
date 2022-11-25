@@ -12,14 +12,16 @@ public class Health : MonoBehaviour
 
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
-    public WaveManager waveManager;
-
     public HealthBarController HealthBarController;
+
+    public GameObject waveManagerOBJ;
+    public WaveManager waveManager;
 
     private void Start()
     {
-        waveManager = GetComponent<WaveManager>();
         HealthBarController.SetHealtBar(currentHealth, maxHealth);
+        waveManagerOBJ = GameObject.Find("WaveManager");
+        waveManager = waveManagerOBJ.GetComponent<WaveManager>();
     }
 
     public void GetHit(float amount, GameObject sender)

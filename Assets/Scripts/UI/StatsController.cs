@@ -44,7 +44,7 @@ public class StatsController : MonoBehaviour
     {
         if (player.GetComponent<PlayerController>().level == 0)
             return;
-        player.GetComponent<Health>().maxHealth = player.GetComponent<Health>().maxHealth + 7;
+        player.GetComponent<PlayerController>().maxHealth = player.GetComponent<PlayerController>().maxHealth + 7;
         --player.GetComponent<PlayerController>().level;
     }
 }

@@ -43,11 +43,14 @@ public class PlayerController : MonoBehaviour
 
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
+    public Transform enemy;
+    
     void Start()
     {
         interactIcon.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        
     }
 
     private void Awake()
@@ -55,7 +58,6 @@ public class PlayerController : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         weaponParent = GetComponentInChildren<WeaponParent>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
-
     }
 
     private void OnEnable()
@@ -75,7 +77,7 @@ public class PlayerController : MonoBehaviour
         Vector2 lookDirection = GetPointerInput() - (Vector2)transform.position;
         playerAnimator.RotateToPointer(lookDirection);
 
-        movementInput = playerInputActions.Player.Move.ReadValue<Vector2>().normalized;
+        movementInput = playerInputActions.Player.Move.ReadValue<Vector2>();
 
         if (canMove) {
             if (movementInput != Vector2.zero)
@@ -89,12 +91,12 @@ public class PlayerController : MonoBehaviour
                 if (!success) {
                     success = TryMove(new Vector2(0, movementInput.y));
                 }
-
-                animator.SetBool("isMoving", success);
-            } else {
-                animator.SetBool("isMoving", false);
             }
         }
+        animator.SetFloat("Speed", movementInput.magnitude);
+
+        animator.SetFloat("Horizontal", movementInput.x);
+        animator.SetFloat("Vertical", movementInput.y);
     }
 
     public void enableInteractIcon()
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
                 moveSpeed * Time.fixedDeltaTime + collisionOffset); 
 
             if (count == 0) {
-                rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+                rb.MovePosition(rb.position + direction.normalized * moveSpeed * Time.fixedDeltaTime);
                 return true;
             }
             else {

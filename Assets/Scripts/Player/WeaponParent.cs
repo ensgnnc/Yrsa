@@ -42,6 +42,7 @@ public class WeaponParent : MonoBehaviour
         transform.right = direction;
 
         Vector2 scale = transform.localScale;
+        Vector2 position = transform.position;
 
         if(direction.x < 0)
         {
@@ -50,7 +51,6 @@ public class WeaponParent : MonoBehaviour
         {
             scale.y = 1;
         }
-
         transform.localScale = scale;
     }
 

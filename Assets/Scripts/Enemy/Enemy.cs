@@ -9,14 +9,10 @@ public class Enemy : MonoBehaviour
 {
     public int levelWorth = 1;
 
+    public float Speed = 3f;
+
     Rigidbody2D rb;
     Animator animator;
-
-    [SerializeField]
-    private float maxSpeed = 2, acceleration = 50, deacceleration = 100;
-    [SerializeField]
-    private float currentSpeed = 0;
-    private Vector2 oldMovementInput;
     public Vector2 MovementInput { get; set; }
 
     private void Awake()
@@ -44,19 +40,15 @@ public class Enemy : MonoBehaviour
     {
         Vector2 scale = transform.localScale;
 
-        if (MovementInput.magnitude > 0 && currentSpeed >= 0)
+        if (MovementInput.magnitude > 0)
         {
-            oldMovementInput = MovementInput;
-            currentSpeed += acceleration * maxSpeed * Time.deltaTime;
             animator.SetBool("isMoving", true);
         }
         else
         {
-            currentSpeed -= deacceleration * maxSpeed * Time.deltaTime;
             animator.SetBool("isMoving", false);
         }
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
-        rb.velocity = oldMovementInput * currentSpeed;
+        rb.MovePosition(rb.position + MovementInput * Speed * Time.fixedDeltaTime);
 
         if (MovementInput.x > 0) {
             scale.x = 1.2f;
