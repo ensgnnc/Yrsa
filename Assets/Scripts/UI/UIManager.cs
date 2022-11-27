@@ -10,34 +10,46 @@ public class UIManager : MonoBehaviour
     public GameObject HUD;
 
     public TextMeshProUGUI levelText;
-    public TextMeshProUGUI healthText;
 
-    public GameObject player;
+    public Slider healthSlider;
+
+    public Slider manaSlider;
+
+    private Transform player;
     private int level;
+
     private float health;
     private float maxHealth;
 
-    public Slider healthSlider;
-    public Color low;
-    public Color high;
+    private float mana;
+    private float maxMana;
 
     void Start()
     {
+        player = findPlayer();
         statsUI.SetActive(false);
+    }
+
+    private Transform findPlayer()
+    {
+        return GameObject.Find("Player").transform;
     }
 
     void Update()
     {
         level = player.GetComponent<PlayerController>().level;
-        levelText.text = "Level: " + level.ToString();
+        levelText.text = level.ToString();
 
         health = player.GetComponent<PlayerController>().currentHealth;
         maxHealth = player.GetComponent<PlayerController>().maxHealth;
+
+        mana = player.GetComponent<PlayerController>().mana;
+        maxMana = player.GetComponent<PlayerController>().maxMana;
+
+        manaSlider.value = mana;
+        manaSlider.maxValue = maxMana;
+
         healthSlider.value = health;
         healthSlider.maxValue = maxHealth;
-
-        healthSlider.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(low, high, healthSlider.normalizedValue);
-
-        healthText.text = health.ToString() + "/" + maxHealth.ToString();
     }
 }

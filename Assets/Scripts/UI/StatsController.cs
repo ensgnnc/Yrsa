@@ -28,7 +28,8 @@ public class StatsController : MonoBehaviour
     {
         if (player.GetComponent<PlayerController>().level == 0)
             return;
-        player.GetComponent<PlayerController>().moveSpeed = player.GetComponent<PlayerController>().moveSpeed * 1.08f;
+        player.GetComponent<PlayerController>().moveSpeed *= 1.08f;
+        player.GetComponent<PlayerController>().dashSpeed *= 1.02f;
         --player.GetComponent<PlayerController>().level;
     }
 
@@ -36,7 +37,7 @@ public class StatsController : MonoBehaviour
     {
         if (player.GetComponent<PlayerController>().level == 0)
             return;
-        player.GetComponent<PlayerController>().power = player.GetComponent<PlayerController>().power + 0.8f;
+        player.GetComponent<PlayerController>().power += 0.8f;
         --player.GetComponent<PlayerController>().level;
     }
 
@@ -44,7 +45,7 @@ public class StatsController : MonoBehaviour
     {
         if (player.GetComponent<PlayerController>().level == 0)
             return;
-        player.GetComponent<PlayerController>().maxHealth = player.GetComponent<PlayerController>().maxHealth + 7;
+        player.GetComponent<PlayerController>().maxHealth += 7;
         --player.GetComponent<PlayerController>().level;
     }
 }

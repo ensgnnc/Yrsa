@@ -1,38 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public int level = 10;
+
+    [Header("Player Stats")]
+    public int level = 0;
     public float currentHealth = 100;
     public float maxHealth = 100;
+    public float mana = 100;
+    public float maxMana = 100;
     public float power = 1.0f;
     public float critDamage = 10f;
     public float critChange = 7f;
-    // Movement
+    public float dashDelay = 5f;
+    public float dashSpeed = 15.0f;
+    public float dashManaCost = 20;
     public float moveSpeed = 5f;
+
+    // Movement
+    [Header("Movement")]
     public float collisionOffset = 0.01f;
-    public ContactFilter2D movementFilter;
     public GameObject body;
+    public ContactFilter2D movementFilter;
     bool canMove = true;
-    public bool success;
+    bool success;
     public Vector2 movementInput;
+    bool canDash = true;
+    float startDashTime = 0.2f;
+    float currentDashTime;
 
     // Interact
+    [Header("Interaction")]
     public GameObject interactIcon;
 
     // Variables
     private List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     private Vector2 boxSize = new Vector2(0.1f, 1f);
+    public float speedLevel;
 
     // Components
+    [Header("Components")]
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public Animator interactionAnimator;
     private PlayerInputActions playerInputActions;
     private PlayerAnimator playerAnimator;
     private Rigidbody2D rb;
@@ -41,16 +54,16 @@ public class PlayerController : MonoBehaviour
     private WeaponParent weaponParent;
     private Camera mainCamera;
 
+    // Events
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
-    public Transform enemy;
-    
+
     void Start()
     {
         interactIcon.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
-        
+
     }
 
     private void Awake()
@@ -72,6 +85,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (currentHealth <= 0)
+        {
+            print("died");
+            /* 
+            TODO:
+            When player die:
+               - Stop the game
+               - than calculate players score and ask for main menu or restart 
+            */
+        }
+
         weaponParent.mouseWorldPosition = GetPointerInput();
 
         Vector2 lookDirection = GetPointerInput() - (Vector2)transform.position;
@@ -79,16 +103,19 @@ public class PlayerController : MonoBehaviour
 
         movementInput = playerInputActions.Player.Move.ReadValue<Vector2>();
 
-        if (canMove) {
+        if (canMove)
+        {
             if (movementInput != Vector2.zero)
             {
                 success = TryMove(movementInput);
 
-                if (!success) {
+                if (!success)
+                {
                     success = TryMove(new Vector2(movementInput.x, 0));
                 }
 
-                if (!success) {
+                if (!success)
+                {
                     success = TryMove(new Vector2(0, movementInput.y));
                 }
             }
@@ -119,6 +146,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (rc.transform.GetComponent<Interactable>())
                 {
+                    interactionAnimator.SetTrigger("Interact");
                     rc.transform.GetComponent<Interactable>().Interact();
                     return;
                 }
@@ -142,25 +170,66 @@ public class PlayerController : MonoBehaviour
             OnDeathWithReference?.Invoke(sender);
         }
     }
+
     private bool TryMove(Vector2 direction)
     {
-        if (direction != Vector2.zero) {
+        if (direction != Vector2.zero)
+        {
             int count = rb.Cast(
                 direction,
-                movementFilter, 
+                movementFilter,
                 castCollisions,
-                moveSpeed * Time.fixedDeltaTime + collisionOffset); 
+                moveSpeed * Time.fixedDeltaTime + collisionOffset);
 
-            if (count == 0) {
+            if (count == 0)
+            {
                 rb.MovePosition(rb.position + direction.normalized * moveSpeed * Time.fixedDeltaTime);
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             return false;
         }
+    }
+
+    public IEnumerator Dash()
+    {
+        if (canDash && mana >= dashManaCost)
+        {
+            canDash = false;
+            canMove = false;
+
+            mana -= dashManaCost;
+
+            currentDashTime = startDashTime;
+
+            while (currentDashTime > 0f)
+            {
+                currentDashTime -= Time.deltaTime;
+                rb.velocity = movementInput.normalized * dashSpeed;
+                yield return null;
+            }
+
+            rb.velocity = new Vector2(0f, 0f);
+
+            canMove = true;
+            StartCoroutine(DashDelay());
+        }
+
+    }
+
+
+    private IEnumerator DashDelay()
+    {
+
+        yield return new WaitForSeconds(dashDelay);
+        canDash = true;
+
     }
 
     private Vector2 GetPointerInput()
@@ -171,7 +240,8 @@ public class PlayerController : MonoBehaviour
         return mouseWorldPosition;
     }
 
-    private void OnFire() {
+    private void OnFire()
+    {
         weaponParent.Attack();
     }
 
@@ -180,11 +250,18 @@ public class PlayerController : MonoBehaviour
         checkInteraction();
     }
 
-    public void LockMovement() {
+    private void OnDash()
+    {
+        StartCoroutine(Dash());
+    }
+
+    public void LockMovement()
+    {
         canMove = false;
     }
 
-    public void UnlockMovement() {
+    public void UnlockMovement()
+    {
         canMove = true;
     }
 }

@@ -530,7 +530,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1445082461
 CanvasRenderer:
@@ -746,7 +746,7 @@ Transform:
   - {fileID: 1811804205}
   - {fileID: 1133203741}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9107093349604930708
 MonoBehaviour:
@@ -892,7 +892,7 @@ MonoBehaviour:
   detectionDelay: 0.02
   aiUpdateDelay: 0.06
   attackDelay: 1
-  attackDistance: 0.5
+  attackDistance: 0.75
   OnAttackPressed:
     m_PersistentCalls:
       m_Calls:
