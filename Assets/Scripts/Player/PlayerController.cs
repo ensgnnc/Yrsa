@@ -88,12 +88,7 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
         {
             print("died");
-            /* 
-            TODO:
-            When player die:
-               - Stop the game
-               - than calculate players score and ask for main menu or restart 
-            */
+            // TODO: stop the game when player die than calculate players score and ask for main menu or restart
         }
 
         weaponParent.mouseWorldPosition = GetPointerInput();

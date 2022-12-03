@@ -762,6 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3995095123814389466}
   player: {fileID: 0}
+  enemy: {fileID: 3995095123814389467}
   power: 7
   delay: 0.2
   OnStart:
@@ -853,6 +854,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cc2424ae302a44f89873ce0e863264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 3
+  moneyWorth: 5
   levelWorth: 1
   Speed: 3
 --- !u!114 &1254153401

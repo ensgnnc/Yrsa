@@ -8,12 +8,26 @@ public class Knockback : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
-    public GameObject player;
+    public Transform player;
+    public Enemy enemy;
 
     [SerializeField]
-    private float power = 7, delay = 0.15f;
+    private float power;
+    private float delay = 0.15f;
+    private float weight;
+    private Vector2 knokbackForce;
+
+    private PlayerController playerController;
 
     public UnityEvent OnStart, OnEnd;
+
+    private void Start()
+    {
+        player = findPlayer();
+
+        weight = enemy.weight;
+        playerController = player.GetComponent<PlayerController>();
+    }
 
     public Transform findPlayer()
     {
@@ -25,7 +39,15 @@ public class Knockback : MonoBehaviour
         StopAllCoroutines();
         OnStart?.Invoke();
         Vector2 direction = (transform.position - findPlayer().position).normalized;
-        rb.AddForce(direction * power, ForceMode2D.Impulse);
+        if ((direction * playerController.power) / ((weight * 0.3f)) == Vector2.zero)
+        {
+            knokbackForce = direction;
+        }
+        else
+        {
+            knokbackForce = (direction * playerController.power) / ((weight * 0.3f));
+        }
+        rb.AddForce(knokbackForce, ForceMode2D.Impulse);
         StartCoroutine(Reset());
     }
 

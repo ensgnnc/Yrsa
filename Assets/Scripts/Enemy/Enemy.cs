@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public float weight = 1;
+    public int moneyWorth = 5;
     public int levelWorth = 1;
 
     public float Speed = 3f;
@@ -26,7 +28,8 @@ public class Enemy : MonoBehaviour
         return GameObject.Find("Player").transform;
     }
 
-    public void giveDrops() {
+    public void giveDrops()
+    {
         findPlayer().GetComponent<PlayerController>().level += levelWorth;
         Destroy(transform.gameObject);
     }
@@ -50,7 +53,8 @@ public class Enemy : MonoBehaviour
         }
         rb.MovePosition(rb.position + MovementInput * Speed * Time.fixedDeltaTime);
 
-        if (MovementInput.x > 0) {
+        if (MovementInput.x > 0)
+        {
             scale.x = 1.2f;
         }
         else if (MovementInput.x < 0)
