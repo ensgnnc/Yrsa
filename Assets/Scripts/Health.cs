@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
             return;
 
         currentHealth -= amount;
-        
+
         HealthBarController.SetHealtBar(currentHealth, maxHealth);
 
         if (currentHealth > 0)

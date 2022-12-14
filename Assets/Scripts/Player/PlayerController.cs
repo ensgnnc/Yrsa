@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public int level = 0;
     public float currentHealth = 100;
     public float maxHealth = 100;
-    public float mana = 100;
+    public float currentMana = 100;
     public float maxMana = 100;
     public float power = 1.0f;
     public float critDamage = 10f;
@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 15.0f;
     public float dashManaCost = 20;
     public float moveSpeed = 5f;
+    private bool isRegenHealth;
+    private bool isRegenMana;
+    private int healthRegenRate = 5;
 
     // Movement
     [Header("Movement")]
@@ -83,12 +86,48 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Disable();
     }
 
+    private IEnumerator RegainHealthOverTime()
+    {
+        isRegenHealth = true;
+        while (currentHealth < maxHealth)
+        {
+            currentHealth += 3;
+            yield return new WaitForSeconds(healthRegenRate);
+        }
+        isRegenHealth = false;
+    }
+
+    private IEnumerator RegainManaOverTime()
+    {
+        isRegenMana = true;
+        while (currentMana < maxMana)
+        {
+            currentMana += 3;
+            yield return new WaitForSeconds(healthRegenRate);
+        }
+        isRegenHealth = false;
+    }
+
     private void FixedUpdate()
     {
         if (currentHealth <= 0)
         {
             print("died");
             // TODO: stop the game when player die than calculate players score and ask for main menu or restart
+        }
+
+        if (Time.timeScale == 0)
+            return;
+        if (currentHealth != maxHealth && !isRegenHealth)
+        {
+            StartCoroutine(RegainHealthOverTime());
+        }
+
+        if (Time.timeScale == 0)
+            return;
+        if (currentMana != maxMana && !isRegenMana)
+        {
+            StartCoroutine(RegainManaOverTime());
         }
 
         weaponParent.mouseWorldPosition = GetPointerInput();
@@ -194,12 +233,12 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Dash()
     {
-        if (canDash && mana >= dashManaCost)
+        if (canDash && currentMana >= dashManaCost)
         {
             canDash = false;
             canMove = false;
 
-            mana -= dashManaCost;
+            currentMana -= dashManaCost;
 
             currentDashTime = startDashTime;
 

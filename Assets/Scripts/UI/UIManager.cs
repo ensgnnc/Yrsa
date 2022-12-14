@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public GameObject HUD;
 
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI manaText;
+    public TextMeshProUGUI healthText;
 
     public Slider healthSlider;
 
@@ -42,9 +44,11 @@ public class UIManager : MonoBehaviour
 
         health = player.GetComponent<PlayerController>().currentHealth;
         maxHealth = player.GetComponent<PlayerController>().maxHealth;
+        healthText.text = health.ToString() + " / " + maxHealth.ToString();
 
-        mana = player.GetComponent<PlayerController>().mana;
+        mana = player.GetComponent<PlayerController>().currentMana;
         maxMana = player.GetComponent<PlayerController>().maxMana;
+        manaText.text = mana.ToString() + " / " + maxMana.ToString();
 
         manaSlider.value = mana;
         manaSlider.maxValue = maxMana;
