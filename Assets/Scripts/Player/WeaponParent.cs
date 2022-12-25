@@ -7,7 +7,7 @@ public class WeaponParent : MonoBehaviour
 {
     public SpriteRenderer playerRenderer, weaponRenderer;
 
-    private Animator animator;
+    //private Animator animator;
 
     public Vector2 mouseWorldPosition;
 
@@ -21,6 +21,12 @@ public class WeaponParent : MonoBehaviour
 
     public float random;
 
+    public GameObject bow;
+    public GameObject sword;
+
+    private BowWeapon bowWeapon;
+    private SwordWeapon swordWeapon;
+
     public void ResetIsAttacking()
     {
         IsAttacking = false;
@@ -28,7 +34,8 @@ public class WeaponParent : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+
+        //animator = GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
@@ -44,66 +51,95 @@ public class WeaponParent : MonoBehaviour
         Vector2 scale = transform.localScale;
         Vector2 position = transform.position;
 
-        if(direction.x < 0)
+        if (direction.x < 0)
         {
             scale.y = -1;
-        } else if (direction.x > 0)
+        }
+        else if (direction.x > 0)
         {
             scale.y = 1;
         }
         transform.localScale = scale;
     }
 
+    //public void Attack()
+    //{
+    //    if (attackBlocked)
+    //        return;
+    //    animator.SetTrigger("Attack");
+    //    IsAttacking = true;
+    //    attackBlocked = true;
+    //    StartCoroutine(DelayAttack());
+    //}
+
     public void Attack()
     {
-        if (attackBlocked)
-            return;
-        animator.SetTrigger("Attack");
-        IsAttacking = true;
-        attackBlocked = true;
-        StartCoroutine(DelayAttack());
-    }
-
-    private IEnumerator DelayAttack()
-    {
-        yield return new WaitForSeconds(delay);
-        attackBlocked = false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Vector3 position = circleOrigin == null ? Vector3.zero : circleOrigin.position;
-        Gizmos.DrawWireSphere(position, radius);
-    }
-
-    public float calculateDamage()
-    {
-        float power = transform.parent.GetComponent<PlayerController>().power;
-        float critDamage = transform.parent.GetComponent<PlayerController>().critDamage;
-        float critChange = transform.parent.GetComponent<PlayerController>().critChange;
-
-        random = UnityEngine.Random.Range(1.0f, 100.0f);
-
-        if(random <= critChange)
+        if (bow.activeInHierarchy)
         {
-            return power * critDamage;
+            bowWeapon = GetComponentInChildren<BowWeapon>();
+            bowWeapon.BowAttack();
         }
-        else
+        else if (sword.activeInHierarchy)
         {
-            return power;
+            swordWeapon = GetComponentInChildren<SwordWeapon>();
+            swordWeapon.SwordAttack();
         }
     }
 
-    public void DetectColliders()
+    //private IEnumerator DelayAttack()
+    //{
+    //    yield return new WaitForSeconds(delay);
+    //    attackBlocked = false;
+    //}
+    //
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Vector3 position = circleOrigin == null ? Vector3.zero : circleOrigin.position;
+    //    Gizmos.DrawWireSphere(position, radius);
+    //}
+    //
+    //public float calculateDamage()
+    //{
+    //    float power = transform.parent.GetComponent<PlayerController>().power;
+    //    float critDamage = transform.parent.GetComponent<PlayerController>().critDamage;
+    //    float critChange = transform.parent.GetComponent<PlayerController>().critChange;
+    //
+    //    random = UnityEngine.Random.Range(1.0f, 100.0f);
+    //
+    //    if (random <= critChange)
+    //    {
+    //        return power * critDamage;
+    //    }
+    //    else
+    //    {
+    //        return power;
+    //    }
+    //}
+    //
+    //public void DetectColliders()
+    //{
+    //    foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrigin.position, radius))
+    //    {
+    //        Health health;
+    //        if (health = collider.GetComponent<Health>())
+    //        {
+    //            health.GetHit(calculateDamage(), transform.gameObject);
+    //        }
+    //    }
+    //}
+    //
+    public static float AngleTowardsMouse(Vector3 pos)
     {
-        foreach (Collider2D collider in Physics2D.OverlapCircleAll(circleOrigin.position, radius))
-        {
-            Health health;
-            if(health = collider.GetComponent<Health>())
-            {
-                health.GetHit(calculateDamage(), transform.gameObject);
-            }
-        }
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 5.23f;
+
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(pos);
+        mousePos.x = mousePos.x - objectPos.x;
+        mousePos.y = mousePos.y - objectPos.y;
+
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+
+        return angle;
     }
 }

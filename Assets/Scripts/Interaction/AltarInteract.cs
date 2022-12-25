@@ -6,6 +6,9 @@ using UnityEngine;
 public class AltarInteract : Interactable
 {
 
+    private bool isFirstTime = true;
+    public QuestManager questManager;
+
     private bool isEnable;
     public GameObject statsUI;
     public GameObject player;
@@ -17,6 +20,7 @@ public class AltarInteract : Interactable
 
     public override void Interact()
     {
+        if (isFirstTime && questManager.questNumber == 2) questManager.nextQuest();
         if (isEnable)
         {
             player.GetComponent<PlayerController>().UnlockMovement();
@@ -24,7 +28,8 @@ public class AltarInteract : Interactable
             statsUI.SetActive(false);
         }
 
-        else { 
+        else
+        {
             player.GetComponent<PlayerController>().LockMovement();
             Time.timeScale = 0;
             statsUI.SetActive(true);

@@ -56,10 +56,14 @@ public class PlayerController : MonoBehaviour
     // Game Objects
     private WeaponParent weaponParent;
     private Camera mainCamera;
+    private BowWeapon bowWeapon;
 
     // Events
     public UnityEvent<GameObject> OnHitWithReference, OnDeathWithReference;
 
+    [Header("Weapons")]
+    public GameObject swordOBJ;
+    public GameObject bowOBJ;
 
     void Start()
     {
@@ -74,6 +78,7 @@ public class PlayerController : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         weaponParent = GetComponentInChildren<WeaponParent>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
+        bowWeapon = GetComponentInChildren<BowWeapon>();
     }
 
     private void OnEnable()
@@ -133,7 +138,7 @@ public class PlayerController : MonoBehaviour
         weaponParent.mouseWorldPosition = GetPointerInput();
 
         Vector2 lookDirection = GetPointerInput() - (Vector2)transform.position;
-        playerAnimator.RotateToPointer(lookDirection);
+        //playerAnimator.RotateToPointer(lookDirection);
 
         movementInput = playerInputActions.Player.Move.ReadValue<Vector2>();
 
@@ -266,7 +271,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private Vector2 GetPointerInput()
+    public Vector2 GetPointerInput()
     {
         Vector3 mouseScreenPosition = playerInputActions.Player.PointerPosition.ReadValue<Vector2>();
         mouseScreenPosition.z = mainCamera.nearClipPlane;
@@ -277,6 +282,7 @@ public class PlayerController : MonoBehaviour
     private void OnFire()
     {
         weaponParent.Attack();
+        //bowWeapon.BowAttack();
     }
 
     private void OnInteract()
@@ -297,5 +303,17 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement()
     {
         canMove = true;
+    }
+
+    private void OnEquipSword()
+    {
+        bowOBJ.SetActive(false);
+        swordOBJ.SetActive(true);
+    }
+
+    private void OnEquipBow()
+    {
+        swordOBJ.SetActive(false);
+        bowOBJ.SetActive(true);
     }
 }

@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -19,6 +18,16 @@ public class WaveManager : MonoBehaviour
 
     // Spawn Areas
     public List<BoxCollider2D> boxCollider2D;
+
+    public QuestManager questManager;
+    public TalkManager talkManager;
+
+    List<string> complate = new List<string>()
+    {
+        "Well done!",
+        "That was cool!",
+        "Next time it will be more difficult!"
+    };
 
     /* 
      * 1) Get random enemy prefab from enemies list.  
@@ -45,7 +54,8 @@ public class WaveManager : MonoBehaviour
         return enemies[randomEnemyInt];
     }
 
-    public void spawnEnemy(int amount) {
+    public void spawnEnemy(int amount)
+    {
         isWaveRunning = true;
         int i = 1;
         activeEnemyCount = amount;
@@ -55,8 +65,8 @@ public class WaveManager : MonoBehaviour
             var enemy = GetRandomEnemy();
             Instantiate(enemy, GetRandomLocation(), enemy.transform.rotation);
             i++;
-        }   
-        
+        }
+
     }
 
     public void onEnemyDie()
@@ -70,11 +80,13 @@ public class WaveManager : MonoBehaviour
 
     public void endWave()
     {
+        if (questManager.questNumber == 1) questManager.nextQuest();
+        talkManager.onInteractWithNPC(complate[UnityEngine.Random.Range(0, complate.Count)]);
         isWaveRunning = false;
     }
 
     public void startWave(int level)
     {
-        spawnEnemy(level + 3);
+        spawnEnemy(4 * level);
     }
 }

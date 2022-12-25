@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +15,13 @@ public class Health : MonoBehaviour
 
     public GameObject waveManagerOBJ;
     public WaveManager waveManager;
+
+    public EnemyAI enemyAI;
+    public AIData aidata;
+    public TargetDetector targetDetector;
+    public Enemy enemy;
+
+    public Collider2D playerCollider;
 
     private void Start()
     {
@@ -39,6 +45,13 @@ public class Health : MonoBehaviour
         }
         else
         {
+            playerCollider.enabled = false;
+            enemy.MovementInput = Vector2.zero;
+            targetDetector.enabled = false;
+            enemyAI.enabled = false;
+            aidata.currentTarget = null;
+            aidata.targets = null;
+
             waveManager.onEnemyDie();
             OnDeathWithReference?.Invoke(sender);
         }

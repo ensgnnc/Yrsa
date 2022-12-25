@@ -12,33 +12,33 @@ public class PlayerAnimator : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
     }
 
-    public void RotateToPointer(Vector2 lookDirection)
-    {
-        Vector3 scale = transform.localScale;
+    //public void RotateToPointer(Vector2 lookDirection)
+    //{
+    //    Vector3 scale = transform.localScale;
 
-        if (playerController.movementInput != Vector2.zero)
-        {
-            if (playerController.movementInput.x > 0)
-            {
-                scale.x = 1.2f;
-            }
-            else if (playerController.movementInput.x < 0)
-            {
-                scale.x = -1.2f;
-            }
-        }
-        else
-        {
-            if (lookDirection.x > 0)
-            {
-                scale.x = 1.2f;
-            }
-            else if (lookDirection.x < 0)
-            {
-                scale.x = -1.2f;
-            }
-        }
-        transform.localScale = scale;
-    }
+    //    if (playerController.movementInput != Vector2.zero)
+    //    {
+    //        if (playerController.movementInput.x > 0)
+    //        {
+    //            scale.x = 1.2f;
+    //        }
+    //        else if (playerController.movementInput.x < 0)
+    //        {
+    //            scale.x = -1.2f;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (lookDirection.x > 0)
+    //        {
+    //            scale.x = 1.2f;
+    //        }
+    //        else if (lookDirection.x < 0)
+    //        {
+    //            scale.x = -1.2f;
+    //        }
+    //    }
+    //    transform.localScale = scale;
+    //}
 
 }

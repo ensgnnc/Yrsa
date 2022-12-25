@@ -2,8 +2,8 @@ using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,16 +11,23 @@ public class Enemy : MonoBehaviour
     public int moneyWorth = 5;
     public int levelWorth = 1;
 
+    public float attackDelay = 3f;
+
     public float Speed = 3f;
 
+    public int hitPower = 5;
+
+    private bool canHit = true;
+
     Rigidbody2D rb;
-    Animator animator;
+    
     public Vector2 MovementInput { get; set; }
+
+    public UnityEvent animator;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
     }
 
     public Transform findPlayer()
@@ -36,31 +43,36 @@ public class Enemy : MonoBehaviour
 
     public void AttackPlayer()
     {
-        --findPlayer().gameObject.GetComponent<PlayerController>().currentHealth;
+        if (canHit) findPlayer().gameObject.GetComponent<PlayerController>().currentHealth -= hitPower;
     }
 
     private void FixedUpdate()
     {
-        Vector2 scale = transform.localScale;
+        //Vector2 scale = transform.localScale;
 
-        if (MovementInput.magnitude > 0)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
+        //if (MovementInput.magnitude > 0)
+        //{
+        //    animator.SetBool("isMoving", true);
+        //}
+        //else
+        //{
+        //    animator.SetBool("isMoving", false);
+        //}
+
+        //animator.SetFloat("Horizontal", MovementInput.x);
+        //animator.SetFloat("Vectoral", MovementInput.y);
+
+        animator?.Invoke();
         rb.MovePosition(rb.position + MovementInput * Speed * Time.fixedDeltaTime);
 
-        if (MovementInput.x > 0)
-        {
-            scale.x = 1.2f;
-        }
-        else if (MovementInput.x < 0)
-        {
-            scale.x = -1.2f;
-        }
-        transform.localScale = scale;
+        //if (MovementInput.x > 0)
+        //{
+        //    scale.x = 1.2f;
+        //}
+        //else if (MovementInput.x < 0)
+        //{
+        //    scale.x = -1.2f;
+        //}
+        //transform.localScale = scale;
     }
 }

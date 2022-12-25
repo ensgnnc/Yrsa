@@ -8,25 +8,38 @@ public class IdoenInteract : Interactable
 
     public WaveManager waveManager;
 
+    private bool isFirstTime = true;
+
+    public QuestManager questManager;
+    public TalkManager talkManager;
+
     List<string> sentences = new List<string>()
     {
-        "So, you want a new wave!",
+        "I heard that you want a new enemy. Here is some for you!",
         "You better get ready for this.",
+    };
+
+    List<string> notDone = new List<string>()
+    {
+        "Complate your wave first!",
     };
 
     public override void Interact()
     {
+        if (isFirstTime)
+        {
+            questManager.nextQuest();
+            isFirstTime = false;
+        }
         if (waveManager.isWaveRunning)
         {
-            print("Complate your wave first!");
+            talkManager.onInteractWithNPC(notDone[UnityEngine.Random.Range(0, notDone.Count)]);
             return;
         }
 
-        int index = UnityEngine.Random.Range(0, sentences.Count);
-        string selectedSentence = sentences[index];
+        talkManager.onInteractWithNPC(sentences[UnityEngine.Random.Range(0, sentences.Count)]);
 
         waveManager.startWave(waveLevel);
 
-        print(selectedSentence);
     }
 }
